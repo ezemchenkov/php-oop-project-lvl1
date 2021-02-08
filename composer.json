@@ -16,7 +16,8 @@
         "phpstan/phpstan": "^0.12.70"
     },
     "require": {
-        "php": "^8.0"
+        "php": "^8.0",
+        "illuminate/collections": "^8.26"
     },
     "autoload": {
         "psr-4": {
