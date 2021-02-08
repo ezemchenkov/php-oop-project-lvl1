@@ -4,10 +4,12 @@ declare(strict_types=1);
 
 namespace Hexlet\Validator\Validator;
 
+use Hexlet\Validator\Validator\Schema\StringSchema;
+
 class Validator
 {
-    public function isValid(): bool
+    public function string(): StringSchema
     {
-        return true;
+        return new StringSchema();
     }
 }
