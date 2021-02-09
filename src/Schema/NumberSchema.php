@@ -25,7 +25,7 @@ class NumberSchema
         return $this;
     }
 
-    public function range(int|float $min, int|float $max): self
+    public function range(int | float $min, int | float $max): self
     {
         $this->checks[] = static fn(mixed $value) => $value >= $min && $value <= $max;
         return $this;
