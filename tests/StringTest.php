@@ -24,6 +24,7 @@ class StringTest extends TestCase
 
     public function testRequired(): void
     {
+        $this->assertTrue($this->schema->isValid(null));
         $this->assertTrue($this->schema->isValid(''));
 
         $this->schema->required();

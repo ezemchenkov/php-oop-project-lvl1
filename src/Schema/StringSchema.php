@@ -10,7 +10,7 @@ class StringSchema
 
     public function __construct()
     {
-        $this->checks[] = static fn(mixed $value) => is_string($value);
+        $this->checks[] = static fn(mixed $value) => is_null($value) || is_string($value);
     }
 
     public function required(): self
