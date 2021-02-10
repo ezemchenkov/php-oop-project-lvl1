@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Hexlet\Validator\Validator;
 
+use Hexlet\Validator\Validator\Schema\ArraySchema;
 use Hexlet\Validator\Validator\Schema\NumberSchema;
 use Hexlet\Validator\Validator\Schema\StringSchema;
 
@@ -17,5 +18,10 @@ class Validator
     public function number(): NumberSchema
     {
         return new NumberSchema();
+    }
+
+    public function array(): ArraySchema
+    {
+        return new ArraySchema();
     }
 }
