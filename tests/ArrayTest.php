@@ -2,13 +2,13 @@
 
 namespace Hexlet\Validator\Validator\Tests;
 
-use Hexlet\Validator\Validator\Schema\ArraySchema;
 use PHPUnit\Framework\TestCase;
 use Hexlet\Validator\Validator\Validator;
+use Hexlet\Validator\Validator\Validator\ArrayValidator;
 
 class ArrayTest extends TestCase
 {
-    private ArraySchema $schema;
+    private ArrayValidator $schema;
 
     public function setUp(): void
     {

@@ -2,13 +2,13 @@
 
 namespace Hexlet\Validator\Validator\Tests;
 
-use Hexlet\Validator\Validator\Schema\NumberSchema;
 use PHPUnit\Framework\TestCase;
 use Hexlet\Validator\Validator\Validator;
+use Hexlet\Validator\Validator\Validator\NumberValidator;
 
 class NumberTest extends TestCase
 {
-    private NumberSchema $schema;
+    private NumberValidator $schema;
 
     public function setUp(): void
     {
