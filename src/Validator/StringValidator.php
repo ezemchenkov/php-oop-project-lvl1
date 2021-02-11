@@ -4,35 +4,33 @@ declare(strict_types=1);
 
 namespace Hexlet\Validator\Validator\Validator;
 
-class StringValidator
-{
-    private array $checks;
+use Hexlet\Validator\Validator\Constraint\ContainsConstraint;
+use Hexlet\Validator\Validator\Constraint\MinLengthConstraint;
+use Hexlet\Validator\Validator\Constraint\RequiredConstraint;
+use Hexlet\Validator\Validator\Constraint\StringConstraint;
 
+class StringValidator extends AbstractValidator
+{
     public function __construct()
     {
-        $this->checks[] = static fn(mixed $value) => is_null($value) || is_string($value);
+        $this->constraints[] = new StringConstraint();
     }
 
     public function required(): self
     {
-        $this->checks[] = static fn(mixed $value) => !empty($value);
+        $this->constraints[] = new RequiredConstraint();
         return $this;
     }
 
     public function minLength(int $length): self
     {
-        $this->checks[] = static fn(mixed $value) => mb_strlen($value) >= $length;
+        $this->constraints[] = new MinLengthConstraint($length);
         return $this;
     }
 
     public function contains(string $substr): self
     {
-        $this->checks[] = static fn(mixed $value) => str_contains($value, $substr);
+        $this->constraints[] = new ContainsConstraint($substr);
         return $this;
-    }
-
-    public function isValid(mixed $value): bool
-    {
-        return collect($this->checks)->every(fn (callable $fn) => $fn($value));
     }
 }
