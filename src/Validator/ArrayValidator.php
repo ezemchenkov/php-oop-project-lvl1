@@ -4,29 +4,24 @@ declare(strict_types=1);
 
 namespace Hexlet\Validator\Validator\Validator;
 
-class ArrayValidator
-{
-    private array $checks;
+use Hexlet\Validator\Validator\Constraint\ArrayConstraint;
+use Hexlet\Validator\Validator\Constraint\SizeofConstraint;
 
+class ArrayValidator extends AbstractValidator
+{
     public function __construct()
     {
-        $this->checks[] = static fn(mixed $value) => is_array($value);
+        $this->constraints[] = new ArrayConstraint();
     }
 
     public function required(): self
     {
-//        $this->checks[] = static fn(mixed $value) => is_array($value);
         return $this;
     }
 
     public function sizeof(int $len): self
     {
-        $this->checks[] = static fn(mixed $value) => count($value) >= $len;
+        $this->constraints[] = new SizeofConstraint($len);
         return $this;
-    }
-
-    public function isValid(mixed $value): bool
-    {
-        return collect($this->checks)->every(fn (callable $fn) => $fn($value));
     }
 }
