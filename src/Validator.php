@@ -4,24 +4,24 @@ declare(strict_types=1);
 
 namespace Hexlet\Validator\Validator;
 
-use Hexlet\Validator\Validator\Schema\ArraySchema;
-use Hexlet\Validator\Validator\Schema\NumberSchema;
-use Hexlet\Validator\Validator\Schema\StringSchema;
+use Hexlet\Validator\Validator\Validator\ArrayValidator;
+use Hexlet\Validator\Validator\Validator\NumberValidator;
+use Hexlet\Validator\Validator\Validator\StringValidator;
 
 class Validator
 {
-    public function string(): StringSchema
+    public function string(): StringValidator
     {
-        return new StringSchema();
+        return new StringValidator();
     }
 
-    public function number(): NumberSchema
+    public function number(): NumberValidator
     {
-        return new NumberSchema();
+        return new NumberValidator();
     }
 
-    public function array(): ArraySchema
+    public function array(): ArrayValidator
     {
-        return new ArraySchema();
+        return new ArrayValidator();
     }
 }

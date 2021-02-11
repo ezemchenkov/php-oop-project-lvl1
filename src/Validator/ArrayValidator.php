@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Hexlet\Validator\Validator\Schema;
+namespace Hexlet\Validator\Validator\Validator;
 
-class ArraySchema
+class ArrayValidator
 {
     private array $checks;
 

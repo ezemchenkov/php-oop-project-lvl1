@@ -2,13 +2,13 @@
 
 namespace Hexlet\Validator\Validator\Tests;
 
-use Hexlet\Validator\Validator\Schema\StringSchema;
 use PHPUnit\Framework\TestCase;
 use Hexlet\Validator\Validator\Validator;
+use Hexlet\Validator\Validator\Validator\StringValidator;
 
 class StringTest extends TestCase
 {
-    private StringSchema $schema;
+    private StringValidator $schema;
 
     public function setUp(): void
     {

@@ -2,15 +2,15 @@
 
 declare(strict_types=1);
 
-namespace Hexlet\Validator\Validator\Schema;
+namespace Hexlet\Validator\Validator\Validator;
 
-class StringSchema
+class NumberValidator
 {
     private array $checks;
 
     public function __construct()
     {
-        $this->checks[] = static fn(mixed $value) => is_null($value) || is_string($value);
+        $this->checks[] = static fn(mixed $value) => is_null($value) || is_numeric($value);
     }
 
     public function required(): self
@@ -19,15 +19,15 @@ class StringSchema
         return $this;
     }
 
-    public function minLength(int $length): self
+    public function positive(): self
     {
-        $this->checks[] = static fn(mixed $value) => mb_strlen($value) >= $length;
+        $this->checks[] = static fn(mixed $value) => $value > 0;
         return $this;
     }
 
-    public function contains(string $substr): self
+    public function range(int | float $min, int | float $max): self
     {
-        $this->checks[] = static fn(mixed $value) => str_contains($value, $substr);
+        $this->checks[] = static fn(mixed $value) => $value >= $min && $value <= $max;
         return $this;
     }
 
