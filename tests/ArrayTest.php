@@ -4,37 +4,52 @@ namespace Hexlet\Validator\Validator\Tests;
 
 use PHPUnit\Framework\TestCase;
 use Hexlet\Validator\Validator\Validator;
-use Hexlet\Validator\Validator\Validator\ArrayValidator;
 
 class ArrayTest extends TestCase
 {
-    private ArrayValidator $schema;
+    private Validator $validator;
 
     public function setUp(): void
     {
-        $this->schema = (new Validator())->array();
+        $this->validator = new Validator();
     }
 
     public function testBase(): void
     {
-        $this->assertTrue($this->schema->isValid([]));
-        $this->assertTrue($this->schema->isValid([1]));
-        $this->assertTrue($this->schema->isValid(['hexlet', 'php']));
+        $schema = $this->validator->array();
+        $this->assertTrue($schema->isValid([]));
+        $this->assertTrue($schema->isValid([1]));
+        $this->assertTrue($schema->isValid(['hexlet', 'php']));
 
-        $this->assertFalse($this->schema->isValid(null));
-        $this->assertFalse($this->schema->isValid(0));
-        $this->assertFalse($this->schema->isValid(''));
-        $this->assertFalse($this->schema->isValid(true));
+        $this->assertFalse($schema->isValid(null));
+        $this->assertFalse($schema->isValid(0));
+        $this->assertFalse($schema->isValid(''));
+        $this->assertFalse($schema->isValid(true));
     }
 
     public function testSizeof(): void
     {
-        $this->assertTrue($this->schema->isValid([]));
+        $schema = $this->validator->array();
+        $this->assertTrue($schema->isValid([]));
 
-        $this->schema->sizeof(2);
-        $this->assertFalse($this->schema->isValid([]));
-        $this->assertFalse($this->schema->isValid([1]));
-        $this->assertTrue($this->schema->isValid([1, 2]));
-        $this->assertTrue($this->schema->isValid([1, 2, 3]));
+        $schema->sizeof(2);
+        $this->assertFalse($schema->isValid([]));
+        $this->assertFalse($schema->isValid([1]));
+        $this->assertTrue($schema->isValid([1, 2]));
+        $this->assertTrue($schema->isValid([1, 2, 3]));
+    }
+
+    public function testShape(): void
+    {
+        $schema = $this->validator->array();
+        $schema->shape([
+            'name' => $this->validator->string()->required(),
+            'age' => $this->validator->number()->positive(),
+        ]);
+
+        $this->assertTrue($schema->isValid(['name' => 'kolya', 'age' => 100]));
+        $this->assertTrue($schema->isValid(['name' => 'maya', 'age' => null]));
+        $this->assertFalse($schema->isValid(['name' => '', 'age' => null]));
+        $this->assertFalse($schema->isValid(['name' => 'ada', 'age' => -5]));
     }
 }

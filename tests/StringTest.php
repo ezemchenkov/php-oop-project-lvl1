@@ -4,49 +4,56 @@ namespace Hexlet\Validator\Validator\Tests;
 
 use PHPUnit\Framework\TestCase;
 use Hexlet\Validator\Validator\Validator;
-use Hexlet\Validator\Validator\Validator\StringValidator;
 
 class StringTest extends TestCase
 {
-    private StringValidator $schema;
+    private Validator $validator;
 
     public function setUp(): void
     {
-        $this->schema = (new Validator())->string();
+        $this->validator = new Validator();
     }
 
     public function testBase(): void
     {
-        $this->assertTrue($this->schema->isValid(''));
-        $this->assertTrue($this->schema->isValid('what does the fox say'));
-        $this->assertTrue($this->schema->isValid('hexlet'));
+        $schema = $this->validator->string();
+
+        $this->assertTrue($schema->isValid(''));
+        $this->assertTrue($schema->isValid('what does the fox say'));
+        $this->assertTrue($schema->isValid('hexlet'));
     }
 
     public function testRequired(): void
     {
-        $this->assertTrue($this->schema->isValid(null));
-        $this->assertTrue($this->schema->isValid(''));
+        $schema = $this->validator->string();
 
-        $this->schema->required();
+        $this->assertTrue($schema->isValid(null));
+        $this->assertTrue($schema->isValid(''));
 
-        $this->assertFalse($this->schema->isValid(null));
-        $this->assertFalse($this->schema->isValid(''));
+        $schema->required();
+
+        $this->assertFalse($schema->isValid(null));
+        $this->assertFalse($schema->isValid(''));
     }
 
     public function testContains(): void
     {
-        $this->schema->contains('what');
-        $this->assertTrue($this->schema->isValid('what does the fox say'));
+        $schema = $this->validator->string();
 
-        $this->schema->contains('whatthe');
-        $this->assertFalse($this->schema->isValid('what does the fox say'));
+        $schema->contains('what');
+        $this->assertTrue($schema->isValid('what does the fox say'));
+
+        $schema->contains('whatthe');
+        $this->assertFalse($schema->isValid('what does the fox say'));
     }
 
     public function testMinLength(): void
     {
-        $this->assertTrue($this->schema->isValid('test'));
+        $schema = $this->validator->string();
 
-        $this->schema->minLength(10);
-        $this->assertFalse($this->schema->isValid('test'));
+        $this->assertTrue($schema->isValid('test'));
+
+        $schema->minLength(10);
+        $this->assertFalse($schema->isValid('test'));
     }
 }

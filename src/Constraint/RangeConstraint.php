@@ -6,7 +6,9 @@ namespace Hexlet\Validator\Validator\Constraint;
 
 class RangeConstraint implements ConstraintInterface
 {
-    public function __construct(private int|float $min, private int|float $max)
+    public const NAME = 'range';
+
+    public function __construct(private int | float $min, private int | float $max)
     {
     }
 

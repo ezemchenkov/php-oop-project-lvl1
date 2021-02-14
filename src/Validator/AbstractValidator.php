@@ -8,10 +8,16 @@ use Hexlet\Validator\Validator\Constraint\ConstraintInterface;
 
 class AbstractValidator
 {
+    protected bool $canBeNull = false;
+
     protected array $constraints;
 
     public function isValid(mixed $value): bool
     {
+        if ($this->canBeNull && is_null($value)) {
+            return true;
+        }
+
         return collect($this->constraints)->every(fn (ConstraintInterface $constraint) => $constraint->isValid($value));
     }
 }

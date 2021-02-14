@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Hexlet\Validator\Validator\Constraint;
 
-class RequiredConstraint implements ConstraintInterface
+class NumberConstraint implements ConstraintInterface
 {
     public function isValid(mixed $value): bool
     {
-        return !empty($value);
+        return is_numeric($value);
     }
 }
