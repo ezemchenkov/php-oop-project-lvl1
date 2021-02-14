@@ -4,16 +4,15 @@ declare(strict_types=1);
 
 namespace Hexlet\Validator\Type;
 
-use Hexlet\Validator\Constraint\CallbackConstraint;
-use Hexlet\Validator\Constraint\ConstraintInterface;
+use Illuminate\Support\Collection;
 
 class AbstractType
 {
     protected bool $canBeNull = false;
 
-    protected array $constraints;
+    protected Collection $validators;
 
-    protected array $customConstraints;
+    protected array $customValidators;
 
     public function isValid(mixed $value): bool
     {
@@ -21,17 +20,18 @@ class AbstractType
             return true;
         }
 
-        return collect($this->constraints)->every(fn (ConstraintInterface $constraint) => $constraint->isValid($value));
+        return $this->validators->every(static fn (callable $fn) => $fn($value));
     }
 
     public function addValidator(string $name, callable $fn): void
     {
-        $this->customConstraints[$name] = $fn;
+        $this->customValidators[$name] = $fn;
     }
 
     public function test(string $name, ...$args): AbstractType
     {
-        $this->constraints[$name] = new CallbackConstraint($this->customConstraints[$name], ...$args);
+        $fn = $this->customValidators[$name];
+        $this->validators->add(static fn (mixed $value) => $fn(...[$value, ...$args]));
         return $this;
     }
 }

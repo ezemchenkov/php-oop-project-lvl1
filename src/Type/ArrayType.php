@@ -4,17 +4,15 @@ declare(strict_types=1);
 
 namespace Hexlet\Validator\Type;
 
-use Hexlet\Validator\Constraint\ArrayConstraint;
-use Hexlet\Validator\Constraint\ShapeConstraint;
-use Hexlet\Validator\Constraint\SizeofConstraint;
-
 class ArrayType extends AbstractType
 {
     public const NAME = 'array';
 
     public function __construct()
     {
-        $this->constraints[] = new ArrayConstraint();
+        $this->validators = collect([
+            static fn (mixed $value) => is_array($value)
+        ]);
     }
 
     public function required(): self
@@ -24,13 +22,17 @@ class ArrayType extends AbstractType
 
     public function sizeof(int $len): self
     {
-        $this->constraints[] = new SizeofConstraint($len);
+        $this->validators->add(static fn (array $items) => count($items) >= $len);
         return $this;
     }
 
-    public function shape(array $rules): self
+    public function shape(array $validators): self
     {
-        $this->constraints[] = new ShapeConstraint($rules);
+        $shapeValidators = collect($validators);
+        $this->validators->add(static fn (array $items) => $shapeValidators->every(
+            static fn (AbstractType $validator, $key) => $validator->isValid($items[$key] ?? null)
+        ));
+
         return $this;
     }
 }
