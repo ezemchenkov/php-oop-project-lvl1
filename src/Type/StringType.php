@@ -8,8 +8,6 @@ class StringType extends AbstractType
 {
     public const NAME = 'string';
 
-    protected bool $canBeNull = true;
-
     public function __construct()
     {
         $this->validators = collect([
@@ -19,7 +17,7 @@ class StringType extends AbstractType
 
     public function required(): self
     {
-        $this->canBeNull = false;
+        $this->allowsNull = false;
         $this->validators->add(static fn (string $value) => $value !== '');
         return $this;
     }
