@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Hexlet\Validator\Validator\Constraint;
+namespace Hexlet\Validator\Constraint;
 
 class PositiveConstraint implements ConstraintInterface
 {

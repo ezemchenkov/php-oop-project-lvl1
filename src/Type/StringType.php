@@ -2,15 +2,17 @@
 
 declare(strict_types=1);
 
-namespace Hexlet\Validator\Validator\Validator;
+namespace Hexlet\Validator\Type;
 
-use Hexlet\Validator\Validator\Constraint\ContainsConstraint;
-use Hexlet\Validator\Validator\Constraint\MinLengthConstraint;
-use Hexlet\Validator\Validator\Constraint\StringConstraint;
-use Hexlet\Validator\Validator\Constraint\StringRequiredConstraint;
+use Hexlet\Validator\Constraint\ContainsConstraint;
+use Hexlet\Validator\Constraint\MinLengthConstraint;
+use Hexlet\Validator\Constraint\StringConstraint;
+use Hexlet\Validator\Constraint\StringRequiredConstraint;
 
-class StringValidator extends AbstractValidator
+class StringType extends AbstractType
 {
+    public const NAME = 'string';
+
     protected bool $canBeNull = true;
 
     public function __construct()
