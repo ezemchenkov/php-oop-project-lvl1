@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Hexlet\Validator\Validator\Validator;
 
 use Hexlet\Validator\Validator\Constraint\ArrayConstraint;
+use Hexlet\Validator\Validator\Constraint\ShapeConstraint;
 use Hexlet\Validator\Validator\Constraint\SizeofConstraint;
 
 class ArrayValidator extends AbstractValidator
@@ -22,6 +23,12 @@ class ArrayValidator extends AbstractValidator
     public function sizeof(int $len): self
     {
         $this->constraints[] = new SizeofConstraint($len);
+        return $this;
+    }
+
+    public function shape(array $rules): self
+    {
+        $this->constraints[] = new ShapeConstraint($rules);
         return $this;
     }
 }

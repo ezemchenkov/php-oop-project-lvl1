@@ -8,6 +8,6 @@ class StringConstraint implements ConstraintInterface
 {
     public function isValid(mixed $value): bool
     {
-        return is_null($value) || is_string($value);
+        return is_string($value);
     }
 }

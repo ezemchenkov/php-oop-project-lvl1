@@ -4,60 +4,67 @@ namespace Hexlet\Validator\Validator\Tests;
 
 use PHPUnit\Framework\TestCase;
 use Hexlet\Validator\Validator\Validator;
-use Hexlet\Validator\Validator\Validator\NumberValidator;
 
 class NumberTest extends TestCase
 {
-    private NumberValidator $schema;
+    private Validator $validator;
 
     public function setUp(): void
     {
-        $this->schema = (new Validator())->number();
+        $this->validator = new Validator();
     }
 
     public function testBase(): void
     {
-        $this->assertTrue($this->schema->isValid(null));
-        $this->assertTrue($this->schema->isValid(0));
-        $this->assertTrue($this->schema->isValid(PHP_INT_MAX));
-        $this->assertTrue($this->schema->isValid(PHP_INT_MIN));
-        $this->assertTrue($this->schema->isValid(INF));
-        $this->assertTrue($this->schema->isValid(-INF));
-        $this->assertFalse($this->schema->isValid('hexlet'));
+        $schema = $this->validator->number();
+
+        $this->assertTrue($schema->isValid(null));
+        $this->assertTrue($schema->isValid(0));
+        $this->assertTrue($schema->isValid(PHP_INT_MAX));
+        $this->assertTrue($schema->isValid(PHP_INT_MIN));
+        $this->assertTrue($schema->isValid(INF));
+        $this->assertTrue($schema->isValid(-INF));
+        $this->assertFalse($schema->isValid('hexlet'));
     }
 
     public function testRequired(): void
     {
-        $this->assertTrue($this->schema->isValid(null));
+        $schema = $this->validator->number();
 
-        $this->schema->required();
+        $this->assertTrue($schema->isValid(null));
 
-        $this->assertFalse($this->schema->isValid(null));
+        $schema->required();
+
+        $this->assertFalse($schema->isValid(null));
     }
 
     public function testPositive(): void
     {
-        $this->assertTrue($this->schema->isValid(-999));
+        $schema = $this->validator->number();
 
-        $this->schema->positive();
-        $this->assertFalse($this->schema->isValid(0));
-        $this->assertFalse($this->schema->isValid(-999));
+        $this->assertTrue($schema->isValid(-999));
+
+        $schema->positive();
+        $this->assertFalse($schema->isValid(0));
+        $this->assertFalse($schema->isValid(-999));
     }
 
     public function testRange(): void
     {
-        $this->assertTrue($this->schema->isValid(-10));
-        $this->assertTrue($this->schema->isValid(10));
+        $schema = $this->validator->number();
 
-        $this->schema->range(-5, 5);
+        $this->assertTrue($schema->isValid(-10));
+        $this->assertTrue($schema->isValid(10));
 
-        $this->assertFalse($this->schema->isValid(-10));
-        $this->assertFalse($this->schema->isValid(10));
+        $schema->range(-5, 5);
 
-        $this->assertTrue($this->schema->isValid(-5));
-        $this->assertTrue($this->schema->isValid(5));
+        $this->assertFalse($schema->isValid(-10));
+        $this->assertFalse($schema->isValid(10));
 
-        $this->assertTrue($this->schema->isValid(-4));
-        $this->assertTrue($this->schema->isValid(4));
+        $this->assertTrue($schema->isValid(-5));
+        $this->assertTrue($schema->isValid(5));
+
+        $this->assertTrue($schema->isValid(-4));
+        $this->assertTrue($schema->isValid(4));
     }
 }
