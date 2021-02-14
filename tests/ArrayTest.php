@@ -20,11 +20,20 @@ class ArrayTest extends TestCase
         $this->assertTrue($schema->isValid([]));
         $this->assertTrue($schema->isValid([1]));
         $this->assertTrue($schema->isValid(['hexlet', 'php']));
+        $this->assertTrue($schema->isValid(null));
 
-        $this->assertFalse($schema->isValid(null));
         $this->assertFalse($schema->isValid(0));
         $this->assertFalse($schema->isValid(''));
         $this->assertFalse($schema->isValid(true));
+    }
+
+    public function testRequired(): void
+    {
+        $schema = $this->validator->array();
+        $this->assertTrue($schema->isValid(null));
+
+        $schema->required();
+        $this->assertFalse($schema->isValid(null));
     }
 
     public function testSizeof(): void

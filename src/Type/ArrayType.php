@@ -15,11 +15,6 @@ class ArrayType extends AbstractType
         ]);
     }
 
-    public function required(): self
-    {
-        return $this;
-    }
-
     public function sizeof(int $len): self
     {
         $this->validators->add(static fn (array $items) => count($items) >= $len);

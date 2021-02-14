@@ -8,15 +8,21 @@ use Illuminate\Support\Collection;
 
 class AbstractType
 {
-    protected bool $canBeNull = false;
+    protected bool $allowsNull = true;
 
     protected Collection $validators;
 
     protected array $customValidators;
 
+    public function required(): self
+    {
+        $this->allowsNull = false;
+        return $this;
+    }
+
     public function isValid(mixed $value): bool
     {
-        if ($this->canBeNull && is_null($value)) {
+        if ($this->allowsNull && is_null($value)) {
             return true;
         }
 
