@@ -4,10 +4,6 @@ declare(strict_types=1);
 
 namespace Hexlet\Validator\Type;
 
-use Hexlet\Validator\Constraint\NumberConstraint;
-use Hexlet\Validator\Constraint\PositiveConstraint;
-use Hexlet\Validator\Constraint\RangeConstraint;
-
 class NumberType extends AbstractType
 {
     public const NAME = 'number';
@@ -16,9 +12,9 @@ class NumberType extends AbstractType
 
     public function __construct()
     {
-        $this->constraints = [
-            NumberConstraint::class => new NumberConstraint(),
-        ];
+        $this->validators = collect([
+            static fn (mixed $value) => is_numeric($value)
+        ]);
     }
 
     public function required(): self
@@ -29,13 +25,13 @@ class NumberType extends AbstractType
 
     public function positive(): self
     {
-        $this->constraints[PositiveConstraint::NAME] = new PositiveConstraint();
+        $this->validators->add(static fn (int | float $value) => $value > 0);
         return $this;
     }
 
     public function range(int | float $min, int | float $max): self
     {
-        $this->constraints[RangeConstraint::NAME] = new RangeConstraint($min, $max);
+        $this->validators->add(static fn (int | float $value) => $value >= $min && $value <= $max);
         return $this;
     }
 }

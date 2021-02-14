@@ -11,11 +11,11 @@ use Hexlet\Validator\Type\ArrayType;
 
 class Validator
 {
-    private array $validators;
+    private array $types;
 
     public function __construct()
     {
-        $this->validators = [
+        $this->types = [
             StringType::NAME => new StringType(),
             NumberType::NAME => new NumberType(),
             ArrayType::NAME => new ArrayType()
@@ -24,11 +24,11 @@ class Validator
 
     public function __call(string $type, array $arguments): AbstractType
     {
-        return $this->validators[$type];
+        return $this->types[$type];
     }
 
     public function addValidator(string $type, string $name, callable $fn): void
     {
-        $this->validators[$type]->addValidator($name, $fn);
+        $this->types[$type]->addValidator($name, $fn);
     }
 }
