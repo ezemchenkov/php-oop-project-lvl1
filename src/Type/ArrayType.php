@@ -2,14 +2,16 @@
 
 declare(strict_types=1);
 
-namespace Hexlet\Validator\Validator\Validator;
+namespace Hexlet\Validator\Type;
 
-use Hexlet\Validator\Validator\Constraint\ArrayConstraint;
-use Hexlet\Validator\Validator\Constraint\ShapeConstraint;
-use Hexlet\Validator\Validator\Constraint\SizeofConstraint;
+use Hexlet\Validator\Constraint\ArrayConstraint;
+use Hexlet\Validator\Constraint\ShapeConstraint;
+use Hexlet\Validator\Constraint\SizeofConstraint;
 
-class ArrayValidator extends AbstractValidator
+class ArrayType extends AbstractType
 {
+    public const NAME = 'array';
+
     public function __construct()
     {
         $this->constraints[] = new ArrayConstraint();

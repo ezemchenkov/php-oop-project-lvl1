@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Hexlet\Validator\Validator\Constraint;
+namespace Hexlet\Validator\Constraint;
 
-use Hexlet\Validator\Validator\Validator\AbstractValidator;
+use Hexlet\Validator\Type\AbstractType;
 
 class ShapeConstraint implements ConstraintInterface
 {
@@ -14,7 +14,7 @@ class ShapeConstraint implements ConstraintInterface
 
     public function isValid(mixed $value): bool
     {
-        return collect($this->constraints)->every(function (AbstractValidator $validator, $key) use ($value) {
+        return collect($this->constraints)->every(function (AbstractType $validator, $key) use ($value) {
             $v = $value[$key] ?? null;
             return $validator->isValid($v);
         });

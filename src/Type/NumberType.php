@@ -2,14 +2,16 @@
 
 declare(strict_types=1);
 
-namespace Hexlet\Validator\Validator\Validator;
+namespace Hexlet\Validator\Type;
 
-use Hexlet\Validator\Validator\Constraint\NumberConstraint;
-use Hexlet\Validator\Validator\Constraint\PositiveConstraint;
-use Hexlet\Validator\Validator\Constraint\RangeConstraint;
+use Hexlet\Validator\Constraint\NumberConstraint;
+use Hexlet\Validator\Constraint\PositiveConstraint;
+use Hexlet\Validator\Constraint\RangeConstraint;
 
-class NumberValidator extends AbstractValidator
+class NumberType extends AbstractType
 {
+    public const NAME = 'number';
+
     protected bool $canBeNull = true;
 
     public function __construct()
